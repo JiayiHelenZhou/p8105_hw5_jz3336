@@ -144,4 +144,6 @@ tidy_df %>%
        title = 'Changes in Observation over an Eight Weeks Period')
 ```
 
+__Comment:__
+Observations in control group and experiment group started of at a similar value.However the observations in experiment group had an prominent increasing trend, which soon surpassed the observation values of control group over the eight weeks period. On the other hand, observation values in control group did not obvious changing trend.
 
