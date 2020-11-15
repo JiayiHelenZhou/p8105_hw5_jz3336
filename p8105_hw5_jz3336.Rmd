@@ -32,10 +32,10 @@ set.seed(1)
 
 ## Problem 1: 
 
-**Description on the raw dataset:**
+__Description on the raw dataset:__
 This dataset contains homicides data in 50 cities in the U.S. There were 12 variable describing the characteristics of each victim in the raw data, including their name, age, sex, and the disposition status. There were 52179 entries in total.
 
-**Import and organize data**
+__Import and organize data:__
 ```{r}
 homicide_df = 
   read_csv("./data/homicide-data.csv") %>% 
@@ -61,7 +61,7 @@ aggregate_df =
   )
 ```
 
-**prop.test:**
+__prop.test:__
 using `prop.test` to get the proportion of unsolved homicides in Baltimore:
 ```{r}
 prop.test(
@@ -83,7 +83,7 @@ results_df =
   select(city_state, estimate, conf.low, conf.high)
 ```
 
-**plot with error bars:**
+__Plot with error bars:__
 ```{r}
 results_df %>% 
   mutate(city_state = fct_reorder(city_state, estimate)) %>% 
@@ -266,6 +266,6 @@ combined_plot =
 combined_plot
 ```
 
-__Comment on Plot2:__ The estimated average of mu across tests for which the null was rejected did not equal to the true value of mu until the true value of mu reached 4. Before mu = 4, the estimated average of mu across tests for which the null was rejected was greater than the true value. Starting from mu = 4, the estimated average of rejected mu become similar to the estimated average of not-rejected mu, which was about the same as the true mu.
+__Comment on Plot2:__ The estimated average of mu across tests for which the null was rejected did not equal to the true value of mu until the true value of mu reached 4. Before mu = 4, the estimated average of mu across tests for which the null was rejected was greater than the true value. Starting from mu = 4, the estimated average of rejected mu become similar to the estimated average of not-rejected mu, which was about the same as the true mu. This is because the mu in the rejected samples needs to be different from the true vale of mu to be rejected, while the estimated mu across all rejected and fail-to-rejected test will have an average value that is close to the true mean.
 
 
