@@ -177,7 +177,7 @@ sim_result0 =
 ```
 
 __5000 times simulation for mu = c(1,2,3,4,5,6):__
-```{r}
+```{r, cache = TRUE}
 sim_results = 
   tibble(mu = c(1, 2, 3, 4, 5, 6)) %>% 
   mutate(
@@ -215,9 +215,15 @@ power =
 power %>% 
   ggplot(aes(x = mu, y = power )) +
   geom_point() +
-  geom_smooth()
+  geom_smooth() + 
+  labs(
+    x = "Effect Size (mu)",
+    y = "Power",
+    title = "The association between Effect Size and Power"
+  )
 ```
 
+__Comment:__ Power is positively related to effect size. Under the null hypothesis of mu = 0, as the effect size (mu) increased from 1 to 6, the power also increased and reached the highest value 1 when effect size is 4.
 
 
 
