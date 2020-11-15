@@ -225,6 +225,32 @@ power %>%
 
 __Comment:__ Power is positively related to effect size. Under the null hypothesis of mu = 0, as the effect size (mu) increased from 1 to 6, the power also increased and reached the highest value 1 when effect size is 4.
 
+__Plot2:__ Make a plot showing the average estimate of μ^ on the y axis and the true value of μμ on the x axis. Make a second plot (or overlay on the first) the average estimate of μ^ only in samples for which the null was rejected on the y axis and the true value of μμ on the x axis. Is the sample average of μ^ across tests for which the null is rejected approximately equal to the true value of μμ? Why or why not?
+```{r}
+data_with_all = 
+  sim_results %>%
+  group_by(mu) %>% 
+  summarize(
+    average_estimate_all = mean(estimate)
+  )
+
+data_with_rejected = 
+   sim_results %>% 
+  mutate(decision = case_when(
+    p.value < 0.05 ~ "rejected",
+    p.value >= 0.05 ~ "fail to reject"
+    ))%>% 
+  filter(decision == "rejected") %>% 
+  group_by(mu) %>% 
+  summarize(
+    average_estimate_rejected = mean(estimate)
+  )
+
+combined_plot =
+  left_join(data_with_all, data_with_rejected, by = "mu")
+```
+
+
 
 
 
