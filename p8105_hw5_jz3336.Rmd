@@ -266,7 +266,6 @@ combined_plot =
 combined_plot
 ```
 
-
-
+__Comment on Plot2:__ The estimated average of mu across tests for which the null was rejected did not equal to the true value of mu until the true value of mu reached 4. Before mu = 4, the estimated average of mu across tests for which the null was rejected was greater than the true value. Starting from mu = 4, the estimated average of rejected mu become similar to the estimated average of not-rejected mu, which was about the same as the true mu.
 
 
