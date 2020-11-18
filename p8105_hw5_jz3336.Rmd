@@ -176,10 +176,10 @@ sim_result0 =
   bind_rows()
 ```
 
-__5000 times simulation for mu = c(1,2,3,4,5,6):__
-```{r, cache = TRUE}
+__5000 times simulation for mu = c(0,1,2,3,4,5,6):__
+```{r}
 sim_results = 
-  tibble(mu = c(1, 2, 3, 4, 5, 6)) %>% 
+  tibble(mu = c(0, 1, 2, 3, 4, 5, 6)) %>% 
   mutate(
     output_lists = map(.x = mu, ~rerun(5000, sim_ttest(.x))),
     estimate_dfs = map(output_lists, bind_rows)) %>% 
@@ -215,15 +215,15 @@ power =
 power %>% 
   ggplot(aes(x = mu, y = power )) +
   geom_point() +
-  geom_smooth() + 
+  geom_line() + 
   labs(
-    x = "Effect Size (mu)",
+    x = "True value of mu",
     y = "Power",
     title = "The association between Effect Size and Power"
   )
 ```
 
-__Comment on Plot 1:__ Power is positively related to effect size. Under the null hypothesis of mu = 0, as the effect size (mu) increased from 1 to 6, the power also increased and reached the highest value 1 when effect size is 4.
+__Comment on Plot 1:__ Power is positively related to effect size. As the true value of mu increased from 0 to 6, the `effect size = (true mean - mu null)` will increase since variance maintained the same during the whole process and mu null also maintained to be 0. Thus, the power will increased and reached the highest value 1 when mu is 4. When the true mean is 0, the power is very small and approximately equals to 0.05.
 
 __Plot2:__ Make a plot showing the average estimate of μ^ on the y axis and the true value of μμ on the x axis. Make a second plot (or overlay on the first) the average estimate of μ^ only in samples for which the null was rejected on the y axis and the true value of μμ on the x axis. Is the sample average of μ^ across tests for which the null is rejected approximately equal to the true value of μμ? Why or why not?
 
@@ -260,12 +260,16 @@ combined_plot =
   labs(
     x = "True value of mu",
     y = "Average estimated value of mu",
-    title = "Comparison between True mu and the Average Estimated mu"
+    title = "Comparison between True mu and the Average Estimated mu in All and Rejected-Only Samples"
   )
 
 combined_plot
 ```
 
-__Comment on Plot2:__ The estimated average of mu across tests for which the null was rejected did not equal to the true value of mu until the true value of mu reached 4. Before mu = 4, the estimated average of mu across tests for which the null was rejected was greater than the true value. Starting from mu = 4, the estimated average of rejected mu become similar to the estimated average of not-rejected mu, which was about the same as the true mu. This is because the mu in the rejected samples needs to be different from the true vale of mu to be rejected, while the estimated mu across all rejected and fail-to-rejected test will have an average value that is close to the true mean.
+__Comment on Plot2:__ 
+The estimated average of mu in all samples equal to the true value of mu. However, the estimated average of mu across tests for which the null was rejected does not always equal the true value of mu. When the true value of mu is zero, the average estimated mu in the sample for which the null was rejected was about the same as the true mean even with small power. This may be explained by the random sampling process that values was randomly picked on both side of zero, and a few extreme sample means can be average out in the end. While when the true value of mean is 1 and 2, the power of rejecting the null was still small, there might be a larger tendency of having the rejected samples have a mean greater than the true value of mu. Thus, as at 1 and 2, the average estimated sample mean in the rejected samples diverged from the true value of mu and the average estimated mu of all samples. As the true value of mu increasing, the power of rejecting the null also increased. Therefore, starting from the true value of mean equaled 3, the average estimated sample mean in the rejected samples merged back to the true value of mu and the average estimated mu of all samples.
+
+
+
 
 
